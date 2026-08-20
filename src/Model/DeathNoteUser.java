@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
 public class DeathNoteUser extends Human {
     public boolean hasShinigamiEyes;
@@ -20,12 +21,21 @@ public class DeathNoteUser extends Human {
         if (!hasShinigamiEyes) {
            return "this Death Note User doesn't have shinigame Eyes";
         }
-      // TODO: Corggir esse retorno
-        return human.getName() + " - " + human.getRemainingLifeSpan();
+        var lifespan = human.getRemainingLifeSpan();
+
+        return String.format(
+                "%s - %d anos, %d meses e %d dias de vida restantes",
+                human.getName(),
+                lifespan.getYears(),
+                lifespan.getMonths(),
+                lifespan.getDays()
+                //Como iss funcionou se eu nao defini meus métodos?
+
+        );
     };
 
-
-    public void writeInDeathNote(Human human, LocalDate DeathDay) {
+// TODO: FAZER MÉTODO PERMITIR ESCREVER O NOME DA VÍTIMA, A CUSA DE SUA MORTE E O TEMPO ATÉ QUE ELA MORRA.
+    public void writeInDeathNote(Human human)   {
 
     };
 }
