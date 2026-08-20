@@ -13,6 +13,9 @@ public class Human {
     int months = random.nextInt(12);
     int days = random.nextInt(31);
 
+
+    public Human(String name, boolean alive) { this.name = name; this.alive = alive;  }
+
     public String getName() {
         return name;
     }
@@ -20,5 +23,19 @@ public class Human {
     public Period getRemainingLifeSpan() {
         this.remainingLifeSpan = Period.of(years, months, days);
         return  this.remainingLifeSpan;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                ", name='" + name + '\'' +
+                ", alive=" + alive +
+                ", remainingLifeSpan=" + remainingLifeSpan +
+                ", years=" + years +
+                ", months=" + months +
+                ", days=" + days +
+                '}';
     }
 }
