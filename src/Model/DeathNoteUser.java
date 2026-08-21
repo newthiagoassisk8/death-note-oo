@@ -1,16 +1,15 @@
 package Model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 public class DeathNoteUser extends Human {
     public boolean hasShinigamiEyes;
 
-    public DeathNoteUser(String name, boolean alive, boolean hasShinigamiEyes) {
-        super(name, alive);
-        // O super aqui está invocando o contrutor da super classe nesse caso Human
-        this.hasShinigamiEyes = hasShinigamiEyes;
-    }
+public DeathNoteUser(String name, boolean alive, boolean hasShinigamiEyes) {
+    super(name, alive );
+    this.hasShinigamiEyes =  hasShinigamiEyes;}
 
     public void setShinigamiEyes() {
        hasShinigamiEyes = true;
@@ -34,8 +33,30 @@ public class DeathNoteUser extends Human {
         );
     };
 
-// TODO: FAZER MÉTODO PERMITIR ESCREVER O NOME DA VÍTIMA, A CUSA DE SUA MORTE E O TEMPO ATÉ QUE ELA MORRA.
-    public void writeInDeathNote(Human human)   {
+    // Sobrecarga de método (method overloading):
+    // este writeInDeathNote recebe a vítima e uma data/hora específica para a morte.
+    public void writeInDeathNote(Human victim, LocalDateTime deathDate) {
+        System.out.println(victim.getName() + " morrerá em " + deathDate);
 
-    };
+    }
+
+    // Sobrecarga de método (method overloading):
+    // este writeInDeathNote tem o mesmo nome, mas recebe apenas a vítima.
+    // Quando a data/hora não é informada, a regra padrão é contar 40 segundos.
+    public void writeInDeathNote(Human victim) {
+        for (int seconds = 40; seconds >= 0; seconds--) {
+            System.out.println(seconds);
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                System.out.println("A contagem foi interrompida.");
+                return;
+            }
+        }
+
+        System.out.println(victim.getName() + " morreu.");
+    }
+
+
 }
