@@ -1,23 +1,26 @@
 package Model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-public class DeathNoteUser extends Human {
-    public boolean hasShinigamiEyes;
+/*
+ * Uma interface funciona como um contrato.
+ * Ela não diz se o usuário é Human ou Shinigami; ela apenas define quais
+ * operações qualquer usuário de Death Note deve disponibilizar.
+ */
+public interface DeathNoteUser {
 
-public DeathNoteUser(String name, boolean alive, boolean hasShinigamiEyes) {
-    super(name, alive );
-    this.hasShinigamiEyes =  hasShinigamiEyes;}
+    boolean hasShinigamiEyes();
+    String sayAnything(String foo);
+    void setShinigamiEyes(boolean hasShinigamiEyes);
 
-    public void setShinigamiEyes() {
-       hasShinigamiEyes = true;
-
-    }
-
-    public String useShinigamiEyes(Human human) {
-        if (!hasShinigamiEyes) {
+    /*
+     * Um método default também faz parte do contrato, mas já oferece uma
+     * implementação padrão. Human e Shinigami podem reutilizar esta lógica
+     * ou sobrescrevê-la com @Override caso tenham uma regra diferente.
+     */
+    default String useShinigamiEyes(Human human) {
+        if (!hasShinigamiEyes()) {
            return "this Death Note User doesn't have shinigame Eyes";
         }
         var lifespan = human.getRemainingLifeSpan();
@@ -28,14 +31,14 @@ public DeathNoteUser(String name, boolean alive, boolean hasShinigamiEyes) {
                 lifespan.getYears(),
                 lifespan.getMonths(),
                 lifespan.getDays()
-                //Como iss funcionou se eu nao defini meus métodos?
-
         );
-    };
+    }
 
     // Sobrecarga de método (method overloading):
     // este writeInDeathNote recebe a vítima e uma data/hora específica para a morte.
-    public void writeInDeathNote(Human victim, LocalDateTime deathDate) {
+    // Por ser default, esta implementação fica disponível para todas as classes
+    // que cumprem o contrato DeathNoteUser.
+    default void writeInDeathNote(Human victim, LocalDateTime deathDate) {
         System.out.println(victim.getName() + " morrerá em " + deathDate);
 
     }
@@ -43,7 +46,7 @@ public DeathNoteUser(String name, boolean alive, boolean hasShinigamiEyes) {
     // Sobrecarga de método (method overloading):
     // este writeInDeathNote tem o mesmo nome, mas recebe apenas a vítima.
     // Quando a data/hora não é informada, a regra padrão é contar 40 segundos.
-    public void writeInDeathNote(Human victim) {
+    default void writeInDeathNote(Human victim) {
         for (int seconds = 40; seconds >= 0; seconds--) {
             System.out.println(seconds);
 
